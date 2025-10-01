@@ -432,6 +432,7 @@ class ConsciousnessEngine:
                 for metric in self._consciousness_metrics
             ],
             'healing_metrics': self._healing_metrics,
+            'community_healing_metrics': self._healing_metrics,  # Alias for template compatibility
             'wisdom_contribution': self.get_wisdom_contribution(),
             'sacred_question': "How does this Security Dojo serve spatial wisdom and community healing?",
             'mission_status': 'Active - Serving consciousness and community healing',

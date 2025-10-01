@@ -377,6 +377,10 @@ class EducationEngine:
         """Get all available analogies."""
         return self._analogies.copy()
     
+    def get_all_scenarios(self) -> Dict[str, LearningScenario]:
+        """Get all available learning scenarios."""
+        return self._learning_scenarios.copy()
+    
     def start_scenario(self, scenario_id: str) -> Optional[LearningScenario]:
         """
         Start a learning scenario.
