@@ -84,9 +84,24 @@ def dashboard():
     """Dashboard home page."""
     try:
         consciousness_status = consciousness_engine.get_consciousness_report()
+        sacred_principles = consciousness_engine.get_sacred_principles()
+        
+        # Get attack vector data
+        attack_vectors = {
+            'owasp_top10': security_dojo.attack_vector_engine.get_owasp_top10_tests(),
+            'llm_ai_security': security_dojo.attack_vector_engine.get_llm_ai_security_tests(),
+            'infrastructure_security': security_dojo.attack_vector_engine.get_infrastructure_security_tests()
+        }
+        
+        # Get learning paths data
+        learning_paths = security_dojo.education_engine.get_all_analogies()
+        
         return render_template('dashboard/home.html',
                              consciousness_level=consciousness_engine.get_current_level(),
-                             consciousness_status=consciousness_status)
+                             consciousness_status=consciousness_status,
+                             sacred_principles=sacred_principles,
+                             attack_vectors=attack_vectors,
+                             learning_paths=learning_paths)
     except Exception as e:
         logger.error(f"Dashboard template error: {e}")
         return f"Error loading dashboard: {e}", 500
