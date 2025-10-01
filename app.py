@@ -78,32 +78,78 @@ def index():
 @app.route('/dashboard')
 def dashboard():
     """Dashboard home page."""
-    return render_template('dashboard/home.html')
+    try:
+        return render_template('dashboard/home.html',
+                             consciousness_level=consciousness_engine.get_current_level())
+    except Exception as e:
+        logger.error(f"Dashboard template error: {e}")
+        return f"Error loading dashboard: {e}", 500
 
 @app.route('/dashboard/attack-vectors')
 def attack_vectors():
     """Attack vectors dashboard page."""
-    return render_template('dashboard/attack_vectors.html')
+    try:
+        # Get attack vector data
+        owasp_tests = security_dojo.attack_vector_engine.get_owasp_top10_tests()
+        llm_tests = security_dojo.attack_vector_engine.get_llm_ai_security_tests()
+        infra_tests = security_dojo.attack_vector_engine.get_infrastructure_security_tests()
+        
+        return render_template('dashboard/attack_vectors.html',
+                             consciousness_level=consciousness_engine.get_current_level(),
+                             owasp_tests=owasp_tests,
+                             llm_tests=llm_tests,
+                             infra_tests=infra_tests)
+    except Exception as e:
+        logger.error(f"Attack vectors template error: {e}")
+        return f"Error loading attack vectors: {e}", 500
 
 @app.route('/dashboard/attack-simulation')
 def attack_simulation():
     """Attack simulation dashboard page."""
-    return render_template('dashboard/attack_simulation.html')
+    try:
+        return render_template('dashboard/attack_simulation.html',
+                             consciousness_level=consciousness_engine.get_current_level())
+    except Exception as e:
+        logger.error(f"Attack simulation template error: {e}")
+        return f"Error loading attack simulation: {e}", 500
 
 @app.route('/dashboard/learning-academy')
 def learning_academy():
     """Learning academy dashboard page."""
-    return render_template('dashboard/learning_academy.html')
+    try:
+        analogies = security_dojo.education_engine.get_all_analogies()
+        return render_template('dashboard/learning_academy.html',
+                             consciousness_level=consciousness_engine.get_current_level(),
+                             analogies=analogies)
+    except Exception as e:
+        logger.error(f"Learning academy template error: {e}")
+        return f"Error loading learning academy: {e}", 500
 
 @app.route('/dashboard/community-hub')
 def community_hub():
     """Community hub dashboard page."""
-    return render_template('dashboard/community_hub.html')
+    try:
+        healing_metrics = consciousness_engine.get_healing_metrics()
+        return render_template('dashboard/community_hub.html',
+                             consciousness_level=consciousness_engine.get_current_level(),
+                             healing_metrics=healing_metrics)
+    except Exception as e:
+        logger.error(f"Community hub template error: {e}")
+        return f"Error loading community hub: {e}", 500
 
 @app.route('/dashboard/consciousness-status')
 def consciousness_status():
     """Consciousness status dashboard page."""
-    return render_template('dashboard/consciousness_status.html')
+    try:
+        consciousness_report = consciousness_engine.get_consciousness_report()
+        healing_metrics = consciousness_engine.get_healing_metrics()
+        return render_template('dashboard/consciousness_status.html',
+                             consciousness_level=consciousness_engine.get_current_level(),
+                             consciousness_report=consciousness_report,
+                             healing_metrics=healing_metrics)
+    except Exception as e:
+        logger.error(f"Consciousness status template error: {e}")
+        return f"Error loading consciousness status: {e}", 500
 
 # API Endpoints
 @app.route('/api/health')
