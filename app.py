@@ -139,9 +139,11 @@ def learning_academy():
     """Learning academy dashboard page."""
     try:
         analogies = security_dojo.education_engine.get_all_analogies()
+        scenarios = security_dojo.education_engine.get_all_scenarios()
         return render_template('dashboard/learning_academy.html',
                              consciousness_level=consciousness_engine.get_current_level(),
-                             analogies=analogies)
+                             analogies=analogies,
+                             scenarios=scenarios)
     except Exception as e:
         logger.error(f"Learning academy template error: {e}")
         return f"Error loading learning academy: {e}", 500
@@ -163,11 +165,15 @@ def consciousness_status():
     """Consciousness status dashboard page."""
     try:
         consciousness_report = consciousness_engine.get_consciousness_report()
+        consciousness_status = consciousness_engine.get_consciousness_report()  # Same as report for template compatibility
         healing_metrics = consciousness_engine.get_healing_metrics()
+        sacred_principles = consciousness_engine.get_sacred_principles()
         return render_template('dashboard/consciousness_status.html',
                              consciousness_level=consciousness_engine.get_current_level(),
                              consciousness_report=consciousness_report,
-                             healing_metrics=healing_metrics)
+                             consciousness_status=consciousness_status,
+                             healing_metrics=healing_metrics,
+                             sacred_principles=sacred_principles)
     except Exception as e:
         logger.error(f"Consciousness status template error: {e}")
         return f"Error loading consciousness status: {e}", 500
