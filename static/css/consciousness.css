@@ -25,6 +25,43 @@ body {
     min-height: 100vh;
 }
 
+/* Bionic Reading Support - Enhanced Readability */
+.bionic-reading {
+    font-weight: 400;
+}
+
+.bionic-reading span {
+    font-weight: 700;
+}
+
+/* Bionic Reading Toggle Button */
+.bionic-toggle {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: var(--aurora-accent);
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 25px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: bold;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease;
+    z-index: 1000;
+}
+
+.bionic-toggle:hover {
+    background: var(--aurora-primary);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+}
+
+.bionic-toggle.active {
+    background: var(--aurora-success);
+}
+
 /* Sacred Headers */
 h1, h2, h3, h4, h5, h6 {
     color: var(--aurora-primary);
