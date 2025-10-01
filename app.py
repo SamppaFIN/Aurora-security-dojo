@@ -83,8 +83,10 @@ def index():
 def dashboard():
     """Dashboard home page."""
     try:
+        consciousness_status = consciousness_engine.get_consciousness_report()
         return render_template('dashboard/home.html',
-                             consciousness_level=consciousness_engine.get_current_level())
+                             consciousness_level=consciousness_engine.get_current_level(),
+                             consciousness_status=consciousness_status)
     except Exception as e:
         logger.error(f"Dashboard template error: {e}")
         return f"Error loading dashboard: {e}", 500
