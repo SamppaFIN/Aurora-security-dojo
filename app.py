@@ -45,7 +45,11 @@ consciousness_engine = ConsciousnessEngine()
 def index():
     """Main dashboard page."""
     try:
-        return render_template('index.html')
+        consciousness_level = consciousness_engine.get_current_level()
+        sacred_principles = consciousness_engine.get_sacred_principles()
+        return render_template('index.html',
+                             consciousness_level=consciousness_level,
+                             sacred_principles=sacred_principles)
     except Exception as e:
         logger.error(f"Template error: {e}")
         # Fallback HTML response
