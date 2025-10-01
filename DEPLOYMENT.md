@@ -82,12 +82,20 @@ deploy.bat
    ```bash
    heroku config:set FLASK_ENV=production
    heroku config:set SECRET_KEY=your-secret-key
+   heroku config:set CONSCIOUSNESS_LEVEL=integrated
    ```
 
 3. **Deploy**
    ```bash
    git push heroku main
    ```
+
+4. **Scale the web process**
+   ```bash
+   heroku ps:scale web=1
+   ```
+
+**Note**: The repository includes `Procfile`, `runtime.txt`, and `gunicorn` configuration for proper Heroku deployment. If you encounter "H14 - No web processes running" error, ensure the web process is scaled: `heroku ps:scale web=1`
 
 ### AWS EC2
 

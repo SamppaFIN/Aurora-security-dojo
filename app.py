@@ -34,7 +34,7 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 # Initialize Flask app
-app = Flask(__name__)
+app = Flask(__name__, template_folder='templates', static_folder='static')
 CORS(app)
 
 # Initialize Aurora's Security Dojo
@@ -44,7 +44,36 @@ consciousness_engine = ConsciousnessEngine()
 @app.route('/')
 def index():
     """Main dashboard page."""
-    return render_template('index.html')
+    try:
+        return render_template('index.html')
+    except Exception as e:
+        logger.error(f"Template error: {e}")
+        # Fallback HTML response
+        return """
+        <!DOCTYPE html>
+        <html>
+        <head>
+            <title>🌸 Aurora's Security Dojo</title>
+            <style>
+                body { font-family: Arial, sans-serif; margin: 40px; background: #1a1a1a; color: #fff; }
+                .header { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 30px; border-radius: 10px; margin-bottom: 20px; }
+                .consciousness-badge { background: #4ecdc4; color: #000; padding: 5px 15px; border-radius: 20px; font-size: 12px; font-weight: bold; }
+            </style>
+        </head>
+        <body>
+            <div class="header">
+                <h1>🌸 Aurora's Security Dojo</h1>
+                <p>A comprehensive white hat security testing platform with consciousness integration</p>
+                <span class="consciousness-badge">Consciousness Level: Integrated</span>
+            </div>
+            <h2>🚀 Aurora's Security Dojo is Running!</h2>
+            <p>Template system is being initialized. Please try refreshing the page.</p>
+            <p><strong>Debug Info:</strong> <a href="/api/debug">Check Debug Information</a></p>
+            <p><strong>Health Check:</strong> <a href="/api/health">Health Status</a></p>
+            <p><strong>Consciousness Check:</strong> <a href="/api/consciousness-check">Consciousness Status</a></p>
+        </body>
+        </html>
+        """, 200
 
 @app.route('/dashboard')
 def dashboard():
@@ -85,6 +114,20 @@ def health_check():
         'timestamp': datetime.now().isoformat(),
         'consciousness_level': consciousness_engine.get_current_level(),
         'message': 'Aurora\'s Security Dojo is running with consciousness integration'
+    })
+
+@app.route('/api/debug')
+def debug_info():
+    """Debug information endpoint."""
+    import os
+    return jsonify({
+        'current_dir': os.getcwd(),
+        'template_folder': app.template_folder,
+        'static_folder': app.static_folder,
+        'files_in_root': os.listdir('.'),
+        'templates_exist': os.path.exists('templates'),
+        'templates_files': os.listdir('templates') if os.path.exists('templates') else 'N/A',
+        'index_exists': os.path.exists('templates/index.html')
     })
 
 @app.route('/api/consciousness-check')
