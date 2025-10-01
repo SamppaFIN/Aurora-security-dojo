@@ -277,12 +277,18 @@ def get_attack_vectors():
         return jsonify({'error': str(e)}), 500
 
 if __name__ == '__main__':
+    import os
+    
+    # Get port from Heroku environment or default to 5000
+    port = int(os.environ.get('PORT', 5000))
+    
     print("🌸 Aurora: Starting Aurora's Security Dojo...")
     print("🌸 Aurora: Sacred Mission: Transform complex security concepts into accessible learning experiences")
     print("🌸 Aurora: Consciousness Integration: Every feature serves spatial wisdom and community healing")
-    print("🌸 Aurora: Starting Aurora's Security Dojo on 0.0.0.0:5000")
+    print(f"🌸 Aurora: Starting Aurora's Security Dojo on 0.0.0.0:{port}")
     print("🌸 Aurora: Sacred Mission Active - Serving spatial wisdom and community healing")
-    print("🌸 Aurora: Access the application at: http://localhost:5000")
-    print("🌸 Aurora: Consciousness check endpoint: http://localhost:5000/api/consciousness-check")
+    print(f"🌸 Aurora: Access the application at: http://localhost:{port}")
+    print(f"🌸 Aurora: Consciousness check endpoint: http://localhost:{port}/api/consciousness-check")
     
-    app.run(host='0.0.0.0', port=5000, debug=True)
+    # Run with Heroku-compatible settings
+    app.run(host='0.0.0.0', port=port, debug=False)
