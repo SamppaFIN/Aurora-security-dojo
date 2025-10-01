@@ -72,7 +72,7 @@ instance/
 
 # Reports
 reports/
-*.html
+# *.html  # Commented out to allow template HTML files
 *.pdf
 *.csv
 
